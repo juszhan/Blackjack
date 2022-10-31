@@ -128,8 +128,6 @@ public class Main {
                             dealerHand.toString()));
                 } else {
                     System.out.println("* Dealer Stand");
-                    System.out.println("Loss - dealer has higher value than player");
-                    lossCount++;
                     break;
                 }
             }
@@ -140,6 +138,13 @@ public class Main {
                 winCount++;
             } else if (dealerState == HandState.TWENTYONE) {
                 System.out.println("Loss - dealer has 21");
+                lossCount++;
+            } else if (dealerState == HandState.VALID) {
+                if (dealerHand.getBestValue() <= playerHand.getBestValue()) {
+                    throw new RuntimeException("DealerHand does not beat PlayerHand");
+                }
+
+                System.out.println("Loss - dealer has higher value than player");
                 lossCount++;
             } else {
                 throw new RuntimeException("Unexpected dealerState");
